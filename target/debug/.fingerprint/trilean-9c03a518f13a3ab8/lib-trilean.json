@@ -1,0 +1,1 @@
+{"rustc":10961766323516725219,"features":"[]","target":4706585906827939152,"profile":14016106259881441569,"path":1055736043208674285,"deps":[],"local":[{"CheckDepInfo":{"dep_info":"debug/.fingerprint/trilean-9c03a518f13a3ab8/dep-lib-trilean"}}],"rustflags":["-D","warnings","-C","codegen-units=10"],"metadata":4943896684799633166,"config":2202906307356721367,"compile_kind":0}

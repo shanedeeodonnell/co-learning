@@ -1,0 +1,10 @@
+/Users/shane/dev/holo/co-learning/target/release/deps/rmp_serde-b1295758eab71217.rmeta: /Users/shane/dev/holo/co-learning/.cargo/registry/src/github.com-1ecc6299db9ec823/rmp-serde-0.15.5/src/lib.rs /Users/shane/dev/holo/co-learning/.cargo/registry/src/github.com-1ecc6299db9ec823/rmp-serde-0.15.5/src/config.rs /Users/shane/dev/holo/co-learning/.cargo/registry/src/github.com-1ecc6299db9ec823/rmp-serde-0.15.5/src/decode.rs /Users/shane/dev/holo/co-learning/.cargo/registry/src/github.com-1ecc6299db9ec823/rmp-serde-0.15.5/src/encode.rs
+
+/Users/shane/dev/holo/co-learning/target/release/deps/librmp_serde-b1295758eab71217.rlib: /Users/shane/dev/holo/co-learning/.cargo/registry/src/github.com-1ecc6299db9ec823/rmp-serde-0.15.5/src/lib.rs /Users/shane/dev/holo/co-learning/.cargo/registry/src/github.com-1ecc6299db9ec823/rmp-serde-0.15.5/src/config.rs /Users/shane/dev/holo/co-learning/.cargo/registry/src/github.com-1ecc6299db9ec823/rmp-serde-0.15.5/src/decode.rs /Users/shane/dev/holo/co-learning/.cargo/registry/src/github.com-1ecc6299db9ec823/rmp-serde-0.15.5/src/encode.rs
+
+/Users/shane/dev/holo/co-learning/target/release/deps/rmp_serde-b1295758eab71217.d: /Users/shane/dev/holo/co-learning/.cargo/registry/src/github.com-1ecc6299db9ec823/rmp-serde-0.15.5/src/lib.rs /Users/shane/dev/holo/co-learning/.cargo/registry/src/github.com-1ecc6299db9ec823/rmp-serde-0.15.5/src/config.rs /Users/shane/dev/holo/co-learning/.cargo/registry/src/github.com-1ecc6299db9ec823/rmp-serde-0.15.5/src/decode.rs /Users/shane/dev/holo/co-learning/.cargo/registry/src/github.com-1ecc6299db9ec823/rmp-serde-0.15.5/src/encode.rs
+
+/Users/shane/dev/holo/co-learning/.cargo/registry/src/github.com-1ecc6299db9ec823/rmp-serde-0.15.5/src/lib.rs:
+/Users/shane/dev/holo/co-learning/.cargo/registry/src/github.com-1ecc6299db9ec823/rmp-serde-0.15.5/src/config.rs:
+/Users/shane/dev/holo/co-learning/.cargo/registry/src/github.com-1ecc6299db9ec823/rmp-serde-0.15.5/src/decode.rs:
+/Users/shane/dev/holo/co-learning/.cargo/registry/src/github.com-1ecc6299db9ec823/rmp-serde-0.15.5/src/encode.rs:

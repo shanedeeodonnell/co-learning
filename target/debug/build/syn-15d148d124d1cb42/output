@@ -1,0 +1,2 @@
+cargo:rustc-cfg=syn_no_negative_literal_parse
+cargo:rustc-cfg=syn_disable_nightly_tests

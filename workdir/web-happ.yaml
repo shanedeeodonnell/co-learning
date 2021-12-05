@@ -1,0 +1,7 @@
+---
+manifest_version: "1"
+name: co-learning
+ui:
+  bundled: "../ui/dist.zip"
+happ_manifest:
+  bundled: "./co-learning.happ"
