@@ -1,27 +1,34 @@
 import { LitElement, html } from "lit";
+import {when} from 'lit/directives/when.js';
 import {customElement, property} from 'lit/decorators.js';
 import { AppWebsocket } from '@holochain/conductor-api';
 
 @customElement('register-player')
 export class RegisterPlayer extends LitElement{
   @property()
-  name = "";
+  name: string = "";
+  @property()
+  login: boolean = true;
 
   render() {
-    return html `
-      <span>
-        <input placeholder="Enter your alias" value="${this.name}" @input=${this.updateName} >
-        <button @click="${this.enterPool}">Join</button>
-      </span>
-    `;
+    return html`
+      ${when(this.login, () => html`      
+        <span>
+          <input placeholder="Enter your alias" value="${this.name}" @input=${this.updateName}>
+          <button @click="${this.join}">Join</button>
+        </span>`,
+      () => html`
+        <span>
+          <button @click="${this.sendPing}">PING!</button>
+        </span>`)}
+      `
   }
 
   updateName(e: { target: HTMLInputElement}) {
     this.name = e.target.value;
-    console.log(this.name)
   }
 
-  async enterPool() {
+  async sendPing() {
     const appWebsocket = await AppWebsocket.connect(`ws://localhost:${process.env.HC_PORT}`);
 
     const appInfo = await appWebsocket.appInfo({installed_app_id: 'co-learning'});
@@ -32,11 +39,29 @@ export class RegisterPlayer extends LitElement{
       cap: null as any,
       cell_id: cellData.cell_id,
       zome_name: 'my_zome',
-      fn_name: 'create_and_hash_entry_player_profile',
+      fn_name: 'ui_send_ping',
+      payload: null,
+      provenance: cellData.cell_id[1],
+    });
+  }
+
+  async join() {
+    console.log("Current name: ", this.name);
+    const appWebsocket = await AppWebsocket.connect(`ws://localhost:${process.env.HC_PORT}`);
+
+    const appInfo = await appWebsocket.appInfo({installed_app_id: 'co-learning'});
+
+    const cellData = appInfo.cell_data[0];
+
+    await appWebsocket.callZome({
+      cap: null as any,
+      cell_id: cellData.cell_id,
+      zome_name: 'my_zome',
+      fn_name: 'join_game_with_code',
       payload: this.name,
       provenance: cellData.cell_id[1],
     });
-    this.joined = true;
-    console.log("Joined");
-  }
+
+    this.login = false;
+  };
 }

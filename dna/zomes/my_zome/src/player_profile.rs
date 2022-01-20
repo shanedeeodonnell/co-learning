@@ -17,6 +17,18 @@ pub struct JoinGameInfo {
     pub nickname: String,
 }
 
+
+pub fn join_game_with_code(input: JoinGameInfo) -> ExternResult<EntryHash> {
+    let anchor = create_game_code_anchor(input.gamecode)?;
+    let player_profile_entry_hash = create_and_hash_entry_player_profile(input.nickname)?;
+    create_link(
+        anchor.clone().into(),
+        player_profile_entry_hash.into(),
+        LinkTag::new(String::from(PLAYER_LINK_TAG)),
+    )?;
+    Ok(anchor)
+}
+
 #[hdk_extern]
 pub fn create_and_hash_entry_player_profile(nickname: String) -> ExternResult<EntryHash> {
     let agent = agent_info()?;
@@ -29,18 +41,6 @@ pub fn create_and_hash_entry_player_profile(nickname: String) -> ExternResult<En
     create_entry(&player_profile)?;
 
     hash_entry(&player_profile)
-}
-
-#[hdk_extern]
-pub fn join_game_with_code(input: JoinGameInfo) -> ExternResult<EntryHash> {
-    let anchor = create_game_code_anchor(input.gamecode)?;
-    let player_profile_entry_hash = create_and_hash_entry_player_profile(input.nickname)?;
-    create_link(
-        anchor.clone().into(),
-        player_profile_entry_hash.into(),
-        LinkTag::new(String::from(PLAYER_LINK_TAG)),
-    )?;
-    Ok(anchor)
 }
 
 pub fn get_player_profiles_for_game_code(

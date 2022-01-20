@@ -13,7 +13,6 @@ pub fn get_game_code_anchor(game_code: String) -> ExternResult<EntryHash> {
     let path: Path = (&Anchor {
         anchor_type: GAME_CODES_ANCHOR.into(),
         anchor_text: Some(game_code),
-    })
-        .into();
+    }).into();
     path.hash()
 }

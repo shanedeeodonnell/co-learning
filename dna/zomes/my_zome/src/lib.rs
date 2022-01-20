@@ -1,4 +1,5 @@
 use hdk::prelude::*;
+use player_profile::JoinGameInfo;
 
 mod player_profile;
 mod game_code;
@@ -17,11 +18,20 @@ pub const ACCESS_CODE: &str = "PINGS";
 // };
 
 entry_defs![
-    // Anchor::entry_def(),
-    // Path::entry_def(),
+    Anchor::entry_def(),
+    Path::entry_def(),
     player_profile::PlayerProfile::entry_def()
-    // game_session::GameSession::entry_def(),
 ];
+
+#[hdk_extern]
+pub fn join_game_with_code(payload: String) -> ExternResult<EntryHash> {
+    debug!("{:?}", payload);
+    let join_game_info = JoinGameInfo{
+        gamecode: ACCESS_CODE.into(),
+        nickname: payload
+    };
+    player_profile::join_game_with_code(join_game_info)
+}
 
 #[hdk_extern]
 pub fn init(_: ()) -> ExternResult<InitCallbackResult> {
@@ -44,22 +54,26 @@ pub fn ui_send_ping(_: ()) -> ExternResult<()> {
 
     let players: Vec<PlayerProfile> = player_profile::get_player_profiles_for_game_code(ACCESS_CODE.into())?;
 
-    let other: PlayerProfile;
-    if players[0].player_id == agent_info()?.agent_initial_pubkey {
-        other = players[1].to_owned();
-    } else {
-        other = players[0].to_owned();
+    // Send a signal to all other players online
+    let mut others: Vec<PlayerProfile> = vec![];
+
+    for player in players {
+        if player.player_id != agent_info()?.agent_initial_pubkey {
+            others.push(player.clone());
+        }
     }
 
     let payload: Ping = Ping { colour: PingColour::Blue };
     
-    call_remote(
-        other.player_id.into(),
-        zome_info()?.name,
-        "receive_ping".into(),
-        None,
-        payload
-    )?;
+    for other in others {
+        call_remote(
+            other.player_id.into(),
+            zome_info()?.name,
+            "receive_ping".into(),
+            None,
+            payload
+        )?;
+    }
 
     debug!("Called remote receive_ping with colour {:?}", payload.colour);
 

@@ -15,6 +15,8 @@ export class HolochainApp extends LitElement {
 
     const signalCb = (signal: AppSignal) => {
       alert("Signal Received!");
+
+      // swtich/case
     }
 
     const appWebsocket = await AppWebsocket.connect(`ws://localhost:${process.env.HC_PORT}`, 12000, signalCb);
