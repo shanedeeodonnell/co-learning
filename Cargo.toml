@@ -1,8 +1,8 @@
 [workspace]
 resolver = "2"
 members = [
-    "dna/zomes/my_zome",
-    "dna/zomes/profiles",
+    "zomes/my_zome",
+    "zomes/profiles",
 ]
 
 [profile.dev]

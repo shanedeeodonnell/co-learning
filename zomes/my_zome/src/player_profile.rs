@@ -17,7 +17,6 @@ pub struct JoinGameInfo {
     pub nickname: String,
 }
 
-
 pub fn join_game_with_code(input: JoinGameInfo) -> ExternResult<EntryHash> {
     let anchor = create_game_code_anchor(input.gamecode)?;
     let player_profile_entry_hash = create_and_hash_entry_player_profile(input.nickname)?;
