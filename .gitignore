@@ -1,2 +1,7 @@
 node_modules
 target
+.cargo/
+*.dna
+*.happ
+*.webhapp
+dist.zip
