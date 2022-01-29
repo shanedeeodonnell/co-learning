@@ -14,6 +14,7 @@ export class HolochainApp extends LitElement {
   async firstUpdated() {
 
     const signalCb = (signal: AppSignal) => {
+      console.log(JSON.stringify(signal, null, 2));
       alert("Signal Received!");
 
       // swtich/case
