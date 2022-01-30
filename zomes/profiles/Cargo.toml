@@ -8,6 +8,6 @@ crate-type = ["cdylib", "rlib"]
 name = "profiles"
 
 [dependencies]
-hc_zome_profiles = {git = "https://github.com/holochain-open-dev/profiles", branch = "main", package = "hc_zome_profiles"}
+hc_zome_profiles = {git = "https://github.com/holochain-open-dev/profiles", rev = "6deeab59d294f9fc80b772ceac7b2d376a0b2c60", package = "hc_zome_profiles"}
 
 
