@@ -14,5 +14,5 @@ pub fn get_game_code_anchor(game_code: String) -> ExternResult<EntryHash> {
         anchor_type: GAME_CODES_ANCHOR.into(),
         anchor_text: Some(game_code),
     }).into();
-    path.hash()
+    path.path_entry_hash()
 }
