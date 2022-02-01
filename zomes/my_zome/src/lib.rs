@@ -1,8 +1,8 @@
 use hdk::prelude::*;
-use player_profile::JoinGameInfo;
+use player_profile::JoinInfo;
 
 mod player_profile;
-mod game_code;
+mod profile_anchor;
 mod utils;
 
 use crate::{
@@ -24,13 +24,13 @@ entry_defs![
 ];
 
 #[hdk_extern]
-pub fn join_game_with_code(payload: String) -> ExternResult<EntryHash> {
+pub fn join_with_code(payload: String) -> ExternResult<EntryHash> {
     debug!("{:?}", payload);
-    let join_game_info = JoinGameInfo{
-        gamecode: ACCESS_CODE.into(),
+    let join_info = JoinInfo{
+        anchorcode: ACCESS_CODE.into(),
         nickname: payload
     };
-    player_profile::join_game_with_code(join_game_info)
+    player_profile::join_with_code(join_info)
 }
 
 #[hdk_extern]
@@ -52,7 +52,7 @@ pub fn init(_: ()) -> ExternResult<InitCallbackResult> {
 #[hdk_extern]
 pub fn ui_send_ping(_: ()) -> ExternResult<()> {
 
-    let players: Vec<PlayerProfile> = player_profile::get_player_profiles_for_game_code(ACCESS_CODE.into())?;
+    let players: Vec<PlayerProfile> = player_profile::get_all_player_profiles(ACCESS_CODE.into())?;
 
     // Send a signal to all other players online
     let mut others: Vec<PlayerProfile> = vec![];
@@ -63,7 +63,7 @@ pub fn ui_send_ping(_: ()) -> ExternResult<()> {
         }
     }
 
-    let payload: Ping = Ping { colour: PingColour::Blue };
+    let payload: String = String::from("blue");
     
     for other in others {
         call_remote(
@@ -71,11 +71,11 @@ pub fn ui_send_ping(_: ()) -> ExternResult<()> {
             zome_info()?.name,
             "receive_ping".into(),
             None,
-            payload
+            payload.clone()
         )?;
     }
 
-    debug!("Called remote receive_ping with colour {:?}", payload.colour);
+    debug!("Called remote receive_ping with colour {:?}", payload);
 
     Ok(())
 }
@@ -85,38 +85,17 @@ pub fn ui_send_ping(_: ()) -> ExternResult<()> {
 // - Button to send signal
 // - Alert on emit signal
 #[hdk_extern]
-pub fn receive_ping(payload: Ping)  -> ExternResult<()> {
+pub fn receive_ping(payload: String)  -> ExternResult<()> {
     emit_signal(payload.clone())?;
-    debug!("External Call: receive_ping with colour {:?}", payload.colour);
+    debug!("External Call: receive_ping with colour {:?}", payload);
     Ok(())
 }
-
-// #[hdk_extern]
-// pub fn get_ping(entry_hash: EntryHashB64) -> ExternResult<Ping> {
-//     let element = get(EntryHash::from(entry_hash), GetOptions::default())?.ok_or(WasmError::Guest(String::from("Post not found")))?;
-
-//     let ping: Ping = element.entry().to_app_option()?.ok_or(WasmError::Guest(String::from("Malformed ping")))?;
-
-//     Ok(ping)
-// }
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum SignalType {
     PingReceived
 }
 
-#[derive(Clone, Serialize, Deserialize, Debug, Copy)]
-pub struct Ping {
-    pub colour: PingColour,
-}
 
-#[derive(Clone, Serialize, Deserialize, Debug, Copy)]
-pub enum PingColour {
-    Red,
-    Blue,
-    Green,
-    White,
-    Black
-}
 
 

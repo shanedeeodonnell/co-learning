@@ -15,37 +15,24 @@ export class HolochainApp extends LitElement {
 
     const signalCb = (signal: AppSignal) => {
       console.log(JSON.stringify(signal, null, 2));
-      alert("Signal Received!");
+      let colour: String = signal.data.payload
+      alert(`A ${colour} Ping received!`);
 
-      // swtich/case
     }
 
     const appWebsocket = await AppWebsocket.connect(`ws://localhost:${process.env.HC_PORT}`, 12000, signalCb);
-
     const appInfo = await appWebsocket.appInfo({installed_app_id: 'co-learning'});
-
     const cellData = appInfo.cell_data[0];
 
-    // this.postHash = await appWebsocket.callZome({
-    //   cap: null as any,
-    //   cell_id: cellData.cell_id,
-    //   zome_name: 'my_zome',
-    //   fn_name: 'create_post',
-    //   payload: 'my post',
-    //   provenance: cellData.cell_id[1],
-    // });
   }
 
   // this gets called on button click
   async ping() {
     //alert();
-    const appWebsocket = await AppWebsocket.connect(`ws://localhost:${process.env.HC_PORT}`);
-
-    const appInfo = await appWebsocket.appInfo({installed_app_id: 'co-learning'});
-
+    const apws = await AppWebsocket.connect(`ws://localhost:${process.env.HC_PORT}`);
+    const appInfo = await apws.appInfo({installed_app_id: 'co-learning'});
     const cellData = appInfo.cell_data[0];
-
-    await appWebsocket.callZome({
+    await apws.callZome({
       cap: null as any,
       cell_id: cellData.cell_id,
       zome_name: 'my_zome',

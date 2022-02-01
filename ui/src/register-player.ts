@@ -18,6 +18,7 @@ export class RegisterPlayer extends LitElement{
           <button @click="${this.join}">Join</button>
         </span>`,
       () => html`
+      <h3>Welcome ${this.name}!</h3>
         <span>
           <button @click="${this.sendPing}">PING!</button>
         </span>`)}
@@ -30,9 +31,7 @@ export class RegisterPlayer extends LitElement{
 
   async sendPing() {
     const appWebsocket = await AppWebsocket.connect(`ws://localhost:${process.env.HC_PORT}`);
-
     const appInfo = await appWebsocket.appInfo({installed_app_id: 'co-learning'});
-
     const cellData = appInfo.cell_data[0];
     
     await appWebsocket.callZome({
@@ -47,17 +46,15 @@ export class RegisterPlayer extends LitElement{
 
   async join() {
     console.log("Current name: ", this.name);
-    const appWebsocket = await AppWebsocket.connect(`ws://localhost:${process.env.HC_PORT}`);
-
-    const appInfo = await appWebsocket.appInfo({installed_app_id: 'co-learning'});
-
+    const apws = await AppWebsocket.connect(`ws://localhost:${process.env.HC_PORT}`);
+    const appInfo = await apws.appInfo({installed_app_id: 'co-learning'});
     const cellData = appInfo.cell_data[0];
 
-    await appWebsocket.callZome({
+    await apws.callZome({
       cap: null as any,
       cell_id: cellData.cell_id,
       zome_name: 'my_zome',
-      fn_name: 'join_game_with_code',
+      fn_name: 'join_with_code',
       payload: this.name,
       provenance: cellData.cell_id[1],
     });
