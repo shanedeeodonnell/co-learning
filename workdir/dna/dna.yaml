@@ -4,7 +4,5 @@ name: my-dna
 uuid: 00000000-0000-0000-0000-000000000000
 properties: ~
 zomes: 
-  - name: my_zome
-    bundled: ../../target/wasm32-unknown-unknown/release/my_zome.wasm
-  - name: profiles
-    bundled: ../../target/wasm32-unknown-unknown/release/profiles.wasm
+  - name: ping
+    bundled: ../../target/wasm32-unknown-unknown/release/ping.wasm

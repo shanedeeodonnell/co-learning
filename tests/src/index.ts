@@ -1,12 +1,12 @@
 
 import { Orchestrator } from "@holochain/tryorama";
 
-import my_zome from './my-dna/my_zome';
+import ping from './my-dna/ping';
 
 let orchestrator: Orchestrator<any>;
 
 orchestrator = new Orchestrator();
-my_zome(orchestrator);
+ping(orchestrator);
 orchestrator.run();
 
 

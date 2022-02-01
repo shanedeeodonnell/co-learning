@@ -10,6 +10,10 @@ export class RegisterPlayer extends LitElement{
   @property()
   login: boolean = true;
 
+  updateName(e: { target: HTMLInputElement}) {
+    this.name = e.target.value;
+  }
+
   render() {
     return html`
       ${when(this.login, () => html`      
@@ -18,46 +22,39 @@ export class RegisterPlayer extends LitElement{
           <button @click="${this.join}">Join</button>
         </span>`,
       () => html`
+      <h3>Welcome ${this.name}!</h3>
         <span>
           <button @click="${this.sendPing}">PING!</button>
         </span>`)}
       `
   }
 
-  updateName(e: { target: HTMLInputElement}) {
-    this.name = e.target.value;
-  }
-
   async sendPing() {
-    const appWebsocket = await AppWebsocket.connect(`ws://localhost:${process.env.HC_PORT}`);
-
-    const appInfo = await appWebsocket.appInfo({installed_app_id: 'co-learning'});
-
+    const apws = await AppWebsocket.connect(`ws://localhost:${process.env.HC_PORT}`);
+    const appInfo = await apws.appInfo({installed_app_id: 'co-learning'});
     const cellData = appInfo.cell_data[0];
     
-    await appWebsocket.callZome({
+    await apws.callZome({
       cap: null as any,
       cell_id: cellData.cell_id,
-      zome_name: 'my_zome',
+      zome_name: 'ping',
       fn_name: 'ui_send_ping',
-      payload: null,
+      payload: this.name,
       provenance: cellData.cell_id[1],
     });
   }
 
   async join() {
     console.log("Current name: ", this.name);
-    const appWebsocket = await AppWebsocket.connect(`ws://localhost:${process.env.HC_PORT}`);
-
-    const appInfo = await appWebsocket.appInfo({installed_app_id: 'co-learning'});
-
+    const apws = await AppWebsocket.connect(`ws://localhost:${process.env.HC_PORT}`);
+    const appInfo = await apws.appInfo({installed_app_id: 'co-learning'});
     const cellData = appInfo.cell_data[0];
 
-    await appWebsocket.callZome({
+    await apws.callZome({
       cap: null as any,
       cell_id: cellData.cell_id,
-      zome_name: 'my_zome',
-      fn_name: 'join_game_with_code',
+      zome_name: 'ping',
+      fn_name: 'join_with_code',
       payload: this.name,
       provenance: cellData.cell_id[1],
     });

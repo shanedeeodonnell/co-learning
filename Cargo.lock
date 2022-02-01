@@ -137,27 +137,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ab5ef0d4909ef3724cc8cce6ccc8572c5c817592e9285f5464f8e86f8bd3726e"
 
 [[package]]
-name = "hc_zome_profiles"
-version = "0.0.1"
-source = "git+https://github.com/holochain-open-dev/profiles?rev=6deeab59d294f9fc80b772ceac7b2d376a0b2c60#6deeab59d294f9fc80b772ceac7b2d376a0b2c60"
-dependencies = [
- "derive_more",
- "hc_zome_profiles_types",
- "hdk",
- "serde",
-]
-
-[[package]]
-name = "hc_zome_profiles_types"
-version = "0.0.1"
-source = "git+https://github.com/holochain-open-dev/profiles?rev=6deeab59d294f9fc80b772ceac7b2d376a0b2c60#6deeab59d294f9fc80b772ceac7b2d376a0b2c60"
-dependencies = [
- "derive_more",
- "hdk",
- "serde",
-]
-
-[[package]]
 name = "hdk"
 version = "0.0.120"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -376,17 +355,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "my_zome"
-version = "0.0.1"
-dependencies = [
- "chrono",
- "derive_more",
- "hdk",
- "holo_hash",
- "serde",
-]
-
-[[package]]
 name = "num-integer"
 version = "0.1.44"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -458,19 +426,23 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8d31d11c69a6b52a174b42bdc0c30e5e11670f90788b2c471c31c1d17d449443"
 
 [[package]]
+name = "ping"
+version = "0.0.1"
+dependencies = [
+ "chrono",
+ "derive_more",
+ "hdk",
+ "holo_hash",
+ "serde",
+]
+
+[[package]]
 name = "proc-macro2"
 version = "1.0.32"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ba508cc11742c0dc5c1659771673afbab7a0efab23aa17e854cbab0837ed0b43"
 dependencies = [
  "unicode-xid",
-]
-
-[[package]]
-name = "profiles"
-version = "0.0.1"
-dependencies = [
- "hc_zome_profiles",
 ]
 
 [[package]]
