@@ -26,37 +26,15 @@ export class HolochainApp extends LitElement {
 
   }
 
-  // this gets called on button click
-  async ping() {
-    //alert();
-    const apws = await AppWebsocket.connect(`ws://localhost:${process.env.HC_PORT}`);
-    const appInfo = await apws.appInfo({installed_app_id: 'co-learning'});
-    const cellData = appInfo.cell_data[0];
-    await apws.callZome({
-      cap: null as any,
-      cell_id: cellData.cell_id,
-      zome_name: 'my_zome',
-      fn_name: 'ui_send_ping',
-      payload: '',
-      provenance: cellData.cell_id[1],
-    });
-  }
-
   render() {
     return html`
       <main>
         <h1>${"Signals and Cap Grants"}</h1>
         <register-player></register-player>
-
       </main>
 
       <p class="app-footer">
-        🚽 Made with love by
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://github.com/open-wc"
-          >open-wc</a>
+        Rearanging elecrons.
       </p>
     `;
   }

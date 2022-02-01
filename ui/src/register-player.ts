@@ -10,6 +10,10 @@ export class RegisterPlayer extends LitElement{
   @property()
   login: boolean = true;
 
+  updateName(e: { target: HTMLInputElement}) {
+    this.name = e.target.value;
+  }
+
   render() {
     return html`
       ${when(this.login, () => html`      
@@ -25,16 +29,12 @@ export class RegisterPlayer extends LitElement{
       `
   }
 
-  updateName(e: { target: HTMLInputElement}) {
-    this.name = e.target.value;
-  }
-
   async sendPing() {
-    const appWebsocket = await AppWebsocket.connect(`ws://localhost:${process.env.HC_PORT}`);
-    const appInfo = await appWebsocket.appInfo({installed_app_id: 'co-learning'});
+    const apws = await AppWebsocket.connect(`ws://localhost:${process.env.HC_PORT}`);
+    const appInfo = await apws.appInfo({installed_app_id: 'co-learning'});
     const cellData = appInfo.cell_data[0];
     
-    await appWebsocket.callZome({
+    await apws.callZome({
       cap: null as any,
       cell_id: cellData.cell_id,
       zome_name: 'my_zome',
