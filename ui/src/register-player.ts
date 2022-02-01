@@ -37,7 +37,7 @@ export class RegisterPlayer extends LitElement{
     await apws.callZome({
       cap: null as any,
       cell_id: cellData.cell_id,
-      zome_name: 'my_zome',
+      zome_name: 'ping',
       fn_name: 'ui_send_ping',
       payload: this.name,
       provenance: cellData.cell_id[1],
@@ -53,7 +53,7 @@ export class RegisterPlayer extends LitElement{
     await apws.callZome({
       cap: null as any,
       cell_id: cellData.cell_id,
-      zome_name: 'my_zome',
+      zome_name: 'ping',
       fn_name: 'join_with_code',
       payload: this.name,
       provenance: cellData.cell_id[1],

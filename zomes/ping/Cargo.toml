@@ -1,11 +1,11 @@
 [package]
 edition = "2018"
-name = "my_zome"
+name = "ping"
 version = "0.0.1"
 
 [lib]
 crate-type = ["cdylib", "rlib"]
-name = "my_zome"
+name = "ping"
 
 [dependencies]
 serde = "1"

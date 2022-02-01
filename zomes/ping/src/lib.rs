@@ -60,11 +60,11 @@ pub fn ui_send_ping(name:String) -> ExternResult<()> {
             zome_info()?.name,
             "receive_ping".into(),
             None,
-            name
+            &name
         )?;
     }
 
-    debug!("Called remote receive_ping from {:?}", payload);
+    debug!("Called remote receive_ping from {:?}", name);
 
     Ok(())
 }

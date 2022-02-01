@@ -3,7 +3,7 @@ import { Orchestrator, Player, Cell } from "@holochain/tryorama";
 import { config, installation, sleep } from '../utils';
 
 export default (orchestrator: Orchestrator<any>) => 
-  orchestrator.registerScenario("my_zome tests", async (s, t) => {
+  orchestrator.registerScenario("ping tests", async (s, t) => {
     // Declare two players using the previously specified config, nicknaming them "alice" and "bob"
     // note that the first argument to players is just an array conductor configs that that will
     // be used to spin up the conductor processes which are returned in a matching array.
@@ -23,7 +23,7 @@ export default (orchestrator: Orchestrator<any>) =>
 
     // Alice creates a post
     const postHash = await alice.call(
-        "my_zome",
+        "ping",
         "create_post",
         postContents
     );
@@ -32,6 +32,6 @@ export default (orchestrator: Orchestrator<any>) =>
     await sleep(50);
     
     // Bob gets the created post
-    const post = await bob.call("my_zome", "get_post", postHash);
+    const post = await bob.call("ping", "get_post", postHash);
     t.equal(post, postContents);
 });

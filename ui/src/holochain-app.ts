@@ -44,6 +44,7 @@ export class HolochainApp extends LitElement {
     .app-footer {
       font-size: calc(12px + 0.5vmin);
       align-items: center;
+      align: bottom;
     }
   `;
 }

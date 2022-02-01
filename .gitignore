@@ -6,3 +6,4 @@ target
 *.webhapp
 dist.zip
 .hc*
+tsconfig.tsbuildinfo
