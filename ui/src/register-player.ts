@@ -39,7 +39,7 @@ export class RegisterPlayer extends LitElement{
       cell_id: cellData.cell_id,
       zome_name: 'my_zome',
       fn_name: 'ui_send_ping',
-      payload: null,
+      payload: this.name,
       provenance: cellData.cell_id[1],
     });
   }

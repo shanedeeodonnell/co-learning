@@ -5,33 +5,15 @@ mod player_profile;
 mod profile_anchor;
 mod utils;
 
-use crate::{
-    player_profile::{PlayerProfile}
-};
+use crate::player_profile::PlayerProfile;
 
-pub const ACCESS_CODE: &str = "PINGS";
-
-// #[derive(Clone, Serialize, Deserialize, Debug)]
-// pub struct Hashed<T> {
-//     pub hash: EntryHashB64,
-//     pub content: T,
-// };
+pub const ACCESS_CODE: &str = "PING";
 
 entry_defs![
     Anchor::entry_def(),
     Path::entry_def(),
     player_profile::PlayerProfile::entry_def()
 ];
-
-#[hdk_extern]
-pub fn join_with_code(payload: String) -> ExternResult<EntryHash> {
-    debug!("{:?}", payload);
-    let join_info = JoinInfo{
-        anchorcode: ACCESS_CODE.into(),
-        nickname: payload
-    };
-    player_profile::join_with_code(join_info)
-}
 
 #[hdk_extern]
 pub fn init(_: ()) -> ExternResult<InitCallbackResult> {
@@ -46,12 +28,21 @@ pub fn init(_: ()) -> ExternResult<InitCallbackResult> {
     Ok(InitCallbackResult::Pass)
 }
 
+#[hdk_extern]
+pub fn join_with_code(payload: String) -> ExternResult<EntryHash> {
+    debug!("{:?}", payload);
+    let join_info = JoinInfo{
+        anchorcode: ACCESS_CODE.into(),
+        nickname: payload
+    };
+    player_profile::join_with_code(join_info)
+}
+
 // Keeping track of which externs are called from where needs some indentifier
 // - ui for calls from user input
 // - no prefix for external zome call
 #[hdk_extern]
-pub fn ui_send_ping(_: ()) -> ExternResult<()> {
-
+pub fn ui_send_ping(name:String) -> ExternResult<()> {
     let players: Vec<PlayerProfile> = player_profile::get_all_player_profiles(ACCESS_CODE.into())?;
 
     // Send a signal to all other players online
@@ -62,8 +53,6 @@ pub fn ui_send_ping(_: ()) -> ExternResult<()> {
             others.push(player.clone());
         }
     }
-
-    let payload: String = String::from("blue");
     
     for other in others {
         call_remote(
@@ -71,11 +60,11 @@ pub fn ui_send_ping(_: ()) -> ExternResult<()> {
             zome_info()?.name,
             "receive_ping".into(),
             None,
-            payload.clone()
+            name
         )?;
     }
 
-    debug!("Called remote receive_ping with colour {:?}", payload);
+    debug!("Called remote receive_ping from {:?}", payload);
 
     Ok(())
 }
@@ -87,9 +76,14 @@ pub fn ui_send_ping(_: ()) -> ExternResult<()> {
 #[hdk_extern]
 pub fn receive_ping(payload: String)  -> ExternResult<()> {
     emit_signal(payload.clone())?;
-    debug!("External Call: receive_ping with colour {:?}", payload);
+    debug!("External Call: receive_ping from {:?}", payload);
     Ok(())
 }
+
+// struct Ping {
+//     colour: String,
+//     nickname: String,
+// }
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum SignalType {
