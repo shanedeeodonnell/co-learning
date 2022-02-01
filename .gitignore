@@ -5,3 +5,4 @@ target
 *.happ
 *.webhapp
 dist.zip
+.hc*
