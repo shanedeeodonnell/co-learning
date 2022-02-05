@@ -1,11 +1,11 @@
 use hdk::prelude::*;
+use holo_hash::AgentPubKeyB64;
 use player_profile::JoinInfo;
 
 mod player_profile;
 mod profile_anchor;
 mod utils;
 
-use crate::player_profile::PlayerProfile;
 
 pub const ACCESS_CODE: &str = "PING";
 
@@ -38,34 +38,18 @@ pub fn join_with_code(payload: String) -> ExternResult<EntryHash> {
     player_profile::join_with_code(join_info)
 }
 
-// Keeping track of which externs are called from where needs some indentifier
-// - ui for calls from user input
-// - no prefix for external zome call
 #[hdk_extern]
-pub fn ui_send_ping(name:String) -> ExternResult<()> {
-    let players: Vec<PlayerProfile> = player_profile::get_all_player_profiles(ACCESS_CODE.into())?;
+pub fn ui_send_direct_ping(agent_pub_key:AgentPubKeyB64) -> ExternResult<()> {
+  debug!("ui_send_direct_ping called");    
 
-    // Send a signal to all other players online
-    let mut others: Vec<PlayerProfile> = vec![];
-
-    for player in players {
-        if player.player_id != agent_info()?.agent_initial_pubkey {
-            others.push(player.clone());
-        }
-    }
-    
-    for other in others {
         call_remote(
-            other.player_id.into(),
-            zome_info()?.name,
+            agent_pub_key.clone().into(),
+            "ping".into(),
             "receive_ping".into(),
             None,
-            &name
+            agent_pub_key.clone()
         )?;
-    }
-
-    debug!("Called remote receive_ping from {:?}", name);
-
+    debug!("Called remote receive_ping from {:?}", agent_pub_key);
     Ok(())
 }
 

@@ -6,3 +6,5 @@ properties: ~
 zomes: 
   - name: ping
     bundled: ../../target/wasm32-unknown-unknown/release/ping.wasm
+  - name: profiles
+    bundled: ../../target/wasm32-unknown-unknown/release/profiles.wasm
