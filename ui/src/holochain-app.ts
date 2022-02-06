@@ -18,6 +18,9 @@ export class HolochainApp extends LitElement {
   @property()
   store!: ProfilesStore;
 
+  @property()
+  nickname!: String;
+
   myProfile = new StoreSubscriber(this, () => this.store?.myProfile);
 
   async firstUpdated() {
@@ -25,7 +28,7 @@ export class HolochainApp extends LitElement {
 
     const signalCb = (signal: AppSignal) => {
       console.log(JSON.stringify(signal, null, 2));
-      alert(`${signal.data.payload} sent a ping!`);
+      this.nickname = signal.data.payload;
     };
 
     const appWebsocket = await AppWebsocket.connect(`ws://localhost:${process.env.HC_PORT}`, 12000, signalCb);
@@ -87,6 +90,7 @@ export class HolochainApp extends LitElement {
             <h2>Welcome ${this.myProfile.value?.nickname}</h2>
             <button @click="${this.sendPing}">PING ALL!</button>
             <list-profiles @agent-selected="${this.sendDirectPing}"></list-profiles>
+            <p>${this.nickname}</p>
           </profile-prompt>
         </context-provider>
       </main>
