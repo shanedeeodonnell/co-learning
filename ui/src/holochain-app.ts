@@ -41,7 +41,7 @@ export class HolochainApp extends LitElement {
     const cellClient = client.forCell(client.cellDataByRoleId("my-dna") as InstalledCell);
   
     this.store = new ProfilesStore(cellClient, {
-      avatarMode: "avatar",
+      avatarMode: "identicon",
     });
   }
 
@@ -84,9 +84,9 @@ export class HolochainApp extends LitElement {
         <h1>${"Signals and Cap Grants"}</h1>
         <context-provider .value=${this.store} .context=${profilesStoreContext} id="profiles-context">
           <profile-prompt>
-          <h2>Welcome ${this.myProfile.value?.nickname}</h2>
-          <button @click="${this.sendPing}">PING ALL!</button>
-          <list-profiles @agent-selected="${this.sendDirectPing}"></list-profiles>
+            <h2>Welcome ${this.myProfile.value?.nickname}</h2>
+            <button @click="${this.sendPing}">PING ALL!</button>
+            <list-profiles @agent-selected="${this.sendDirectPing}"></list-profiles>
           </profile-prompt>
         </context-provider>
       </main>

@@ -1,18 +1,11 @@
 use hdk::prelude::*;
 use holo_hash::AgentPubKeyB64;
-use player_profile::JoinInfo;
 
-mod player_profile;
-mod profile_anchor;
 mod utils;
-
-
-pub const ACCESS_CODE: &str = "PING";
 
 entry_defs![
     Anchor::entry_def(),
-    Path::entry_def(),
-    player_profile::PlayerProfile::entry_def()
+    Path::entry_def()
 ];
 
 #[hdk_extern]
@@ -26,16 +19,6 @@ pub fn init(_: ()) -> ExternResult<InitCallbackResult> {
     };
     create_cap_grant(grant)?;
     Ok(InitCallbackResult::Pass)
-}
-
-#[hdk_extern]
-pub fn join_with_code(payload: String) -> ExternResult<EntryHash> {
-    debug!("{:?}", payload);
-    let join_info = JoinInfo{
-        anchorcode: ACCESS_CODE.into(),
-        nickname: payload
-    };
-    player_profile::join_with_code(join_info)
 }
 
 #[hdk_extern]
@@ -63,17 +46,3 @@ pub fn receive_ping(payload: String)  -> ExternResult<()> {
     debug!("External Call: receive_ping from {:?}", payload);
     Ok(())
 }
-
-// struct Ping {
-//     colour: String,
-//     nickname: String,
-// }
-
-#[derive(Serialize, Deserialize, Debug)]
-pub enum SignalType {
-    PingReceived
-}
-
-
-
-

@@ -1,7 +1,8 @@
 ## editors
 /.idea
 /.vscode
-
+tsconfig.tsbuildinfo
+.running
 ## system files
 .DS_Store
 
@@ -23,4 +24,3 @@
 storybook-static
 .rollup.cache
 
-tsconfig.tsbuildinfo

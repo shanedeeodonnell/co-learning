@@ -1,4 +1,5 @@
 extern crate hc_zome_profiles;
+
 use hdk::prelude::*;
 use hc_zome_profiles_types::{self, AgentProfile};
 
@@ -18,7 +19,7 @@ pub fn ui_send_ping(name:String) -> ExternResult<()> {
             others.push(player.clone());
         }
     }
-    
+
     for other in others {
         call_remote(
             other.agent_pub_key.into(),
