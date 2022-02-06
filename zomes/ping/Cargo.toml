@@ -14,3 +14,4 @@ chrono = {version = "0.4", features = ["serde"]}
 
 hdk = "0.0.120"
 holo_hash = { version = "0.0.17", features = ["encoding"] }
+hc_zome_profiles_types = { git = "https://github.com/holochain-open-dev/profiles", rev = "for-hc-v0.0.124", package = "hc_zome_profiles_types" }

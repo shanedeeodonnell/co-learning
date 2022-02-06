@@ -452,6 +452,7 @@ version = "0.0.1"
 dependencies = [
  "chrono",
  "derive_more",
+ "hc_zome_profiles_types",
  "hdk",
  "holo_hash",
  "serde",
@@ -471,8 +472,6 @@ name = "profiles"
 version = "0.0.1"
 dependencies = [
  "hc_zome_profiles",
- "hc_zome_profiles_types",
- "hdk",
 ]
 
 [[package]]

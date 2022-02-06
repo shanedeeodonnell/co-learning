@@ -53,7 +53,7 @@ export class HolochainApp extends LitElement {
     await apws.callZome({
       cap_secret: null as any,
       cell_id: cellData.cell_id,
-      zome_name: 'profiles',
+      zome_name: 'ping',
       fn_name: 'ui_send_ping',
       payload: this.myProfile.value?.nickname,
       provenance: cellData.cell_id[1],
