@@ -63,13 +63,13 @@ pub fn ui_send_ping(name:String) -> ExternResult<()> {
 #[hdk_extern]
 pub fn ui_send_direct_ping(agent_pub_key:AgentPubKeyB64) -> ExternResult<()> {
     debug!("ui_send_direct_ping called");    
-
+    let this_agent_pub_key = agent_info()?.agent_initial_pubkey;
     let players_response = call(
         CallTargetCell::Local,
         "profiles".into(), 
         "get_agent_profile".into(), 
         None, 
-        agent_pub_key.clone())?;
+        this_agent_pub_key.clone())?;
     
    let extern_player =  match players_response {
         ZomeCallResponse::Ok(content) => Ok(content),
