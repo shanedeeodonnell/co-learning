@@ -29,6 +29,7 @@
     "npm": ">=7.0.0"
   },
   "dependencies": {
+    "@holochain/client": "^0.3.2",
     "lit": "^2.1.1"
   }
 }
