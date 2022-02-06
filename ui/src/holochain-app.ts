@@ -26,7 +26,6 @@ export class HolochainApp extends LitElement {
     await this.setupProfiles();
 
     const signalCb = (signal: AppSignal) => {
-      //console.log(JSON.stringify(signal, null, 2));
       this.nickname = signal.data.payload;
     };
 

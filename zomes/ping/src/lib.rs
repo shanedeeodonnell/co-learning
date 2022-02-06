@@ -1,5 +1,5 @@
 use hdk::prelude::*;
-use holo_hash::AgentPubKeyB64;
+use holo_hash::{AgentPubKeyB64};
 use hc_zome_profiles_types::{AgentProfile};
 
 mod utils;
@@ -28,14 +28,14 @@ pub fn init(_: ()) -> ExternResult<InitCallbackResult> {
 #[hdk_extern]
 pub fn ui_send_ping(name:String) -> ExternResult<()> {
     debug!("ui_send_ping called");
-    let players_response = call(
+    let player_response = call(
         CallTargetCell::Local,
         "profiles".into(), 
         "get_all_profiles".into(), 
         None, 
         ())?;
     
-   let extern_players =  match players_response {
+   let extern_players =  match player_response {
         ZomeCallResponse::Ok(content) => Ok(content),
         _ => Err(WasmError::Guest("no players, or something...".into())),
     }?;
@@ -64,14 +64,14 @@ pub fn ui_send_ping(name:String) -> ExternResult<()> {
 pub fn ui_send_direct_ping(agent_pub_key:AgentPubKeyB64) -> ExternResult<()> {
     debug!("ui_send_direct_ping called");    
     let this_agent_pub_key = agent_info()?.agent_initial_pubkey;
-    let players_response = call(
+    let player_response = call(
         CallTargetCell::Local,
         "profiles".into(), 
         "get_agent_profile".into(), 
         None, 
         this_agent_pub_key.clone())?;
     
-   let extern_player =  match players_response {
+   let extern_player =  match player_response {
         ZomeCallResponse::Ok(content) => Ok(content),
         _ => Err(WasmError::Guest("no player, or something...".into())),
     }?;
@@ -89,10 +89,6 @@ pub fn ui_send_direct_ping(agent_pub_key:AgentPubKeyB64) -> ExternResult<()> {
     Ok(())
 }
 
-// MAKE UI
-// - User name input and login
-// - Button to send signal
-// - Alert on emit signal
 #[hdk_extern]
 pub fn receive_ping(payload: String)  -> ExternResult<()> {
     emit_signal(payload.clone())?;
