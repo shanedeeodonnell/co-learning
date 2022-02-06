@@ -1,6 +1,6 @@
 
 # co-learning
-
+This project is actively built by a few holochain devcamp 8 participants. We tinker with it during weekly live practice hackalong sessions. Reach out if you are new to holochain and would like to participate!
 ## Environment Setup
 
 1. Install the holochain dev environment (only nix-shell is required): https://developer.holochain.org/docs/install/
@@ -43,17 +43,17 @@ To test out the UI:
 npm start
 ```
 
-To run another agent, open another terminal, and execute again:
+To run multiple agents, execute the following, where <integer> is the number of cells/agents/clients you want to spin up:
 
 ```bash
-npm start
+npm run network <integer>
 ```
 
 Each new agent that you create this way will get assigned its own port and get connected to the other agents.
 
 ## Package
 
-To package the web happ:
+To package the .webhapp:
 
 ``` bash
 npm run package
